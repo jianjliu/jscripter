@@ -1,0 +1,16 @@
+Welcome to JScripter Standard 1.0
+=================================
+To Script In Java!
+
+JScripter(JS) 1.0 is open source Java libraries released under GNU Public License version 3 (gpl-v3).
+JScripter(JS) can be used to create JS applets.
+
+JScripter(JS) has 3 parts:
+	1. JS Standard Library: for JS applets developers and all others.
+	2. JS Emulation Library: for developers who want their JS applets re-compiled into JavaScript with a JS re-compiler.
+	3. JS Simulation Library:  for developers who want their JS applets running in a pure Java environment.
+
+JS Standard Library is the main part of JS Libraries. It has emulated most of the features of JavaScript language.
+
+This library requires JDK 1.5 (or above). If you find bugs and issues on these libraries, 
+please contact the author J.J.Liu at jianjunliu@126.com or check the web site http://www.jscripter.org

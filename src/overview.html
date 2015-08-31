@@ -1,0 +1,28 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Overview JScripter Emulation 1.0 API & Re-compilation Specification</title>
+</head>
+<body>
+
+<p>This document is the API and re-compilation specification for JScripter(JS) Emulation 1.0.</p>
+
+<p>JS Emulation Library is written in pure Java language on the top of <a href="http://www.jscripter.org/jsstd.html" target="_blank">JS Standard Library</a>
+and fully complies with the <a href="http://www.jscripter.org/jsstd/docs/api" target="_blank">JS Standard API & Re-compilation Specification</a>.</p>
+
+<p>In other words, JS Emulation Library perfectly extends <a href="http://www.jscripter.org/jsstd.html" target="_blank">JS Standard Library</a>, except that it 
+is not for end use but for re-compilation. It emulates the key features of Java language for JavaScript environment.
+JS re-compilers are encouraged to include this library in their process.</p>
+
+<p>As an important part of <a href="http://www.jscripter.org/index.html" target="_blank">JS Libraries</a>, this library actually determines which Java standard 
+classes can be used in a well-complied JS application. Using a Java standard class without emulated in this library will
+definitely cause re-compilation errors.</p>
+
+<p>The current release of this library has emulated most Java standard classes and interfaces of the <tt>java.lang</tt>
+package. Of course it does not emulate all the methods of the classes. I expect to emulate the whole <tt>java.util</tt> 
+package in the near future. Some Java packages like <tt>java.io</tt> never comes into this library, obviously it is 
+simply because JavaScript language does not do local I/O's at all.</p>
+
+</body>
+</html>

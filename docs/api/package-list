@@ -1,0 +1,6 @@
+org.jscripter.emu
+org.jscripter.emu.gc
+org.jscripter.emu.java
+org.jscripter.emu.java.io
+org.jscripter.emu.java.lang
+org.jscripter.emu.java.util

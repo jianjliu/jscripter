@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>JScripter API for JavaScript Language</title>
+</head>
+<body>
+
+<p>Opaque classes and interfaces necessary to simulate JavaScript features, and internal 
+classes for simulative implementation.</p>
+
+<p>For the purposes of both simulation and re-compilation, JS has to, in addition to the 
+access control from Java language, limit the usage of classes and class members by defining 
+compatibility of software members. To JS, a Java software encloses its package collections; 
+A package collection encloses its packages; A package encloses its classes, interfaces, and 
+sub-packages; An interface or class encloses its inner classes and interfaces, its static 
+and instance members including fields, methods and constructors; A field or a constructor 
+encloses its declaration and definition; And a method encloses its declaration, and its 
+definition (method body) if it is concrete.</p>
+
+<p>JS specifies the compatibility of a software member into three levels: <b>normal</b>, 
+<b>opaque</b> and <b>internal</b>. JS Standard Library contains a few <b>opaque</b> interfaces, 
+several <b>internal</b> classes, a couple of base <b>opaque</b> classes, many extended 
+<b>opaque</b> classes, and a lot more <b>normal</b> classes, all distinctively described in 
+the documentation. Accessing software members violating their compatibility shall cause 
+re-compilation failure.</p>
+
+<p>An <b>opaque</b> member can be accessed freely wherever a <b>normal</b> one could be, but 
+it is opaque to JS re-compilers that are required to treat it as just a name. Members of an 
+<b>opaque</b> member are automatically <b>opaque</b> unless specified otherwise. The opacity 
+checking depends on naming reference only. As specified in each "JavaScript" section, 
+re-compilers are expected to convert <b>opaque</b> operations straight forward to the 
+required JavaScript expressions by checking the naming references, rather than resolving the 
+actual members. This is the rule of "Names only for <b>opaque</b>". Note that, subclasses of 
+an <b>opaque</b> class are also <b>opaque</b> while an <b>opaque</b> interfaces can only be 
+implemented in <b>opaque</b> classes or <b>internal</b> classes, such as the classes in JS 
+Simulation Library which is totally isolated from re-compilers by the class {@link js.Sim}. 
+Other than extending the existing <b>opaque</b> classes, developers can not specify opacity 
+for any classes or interfaces.</p>
+
+<p>JS re-compilers shall report errors on any operations causing to access the class data 
+of <b>opaque</b> members.</p>
+
+<p><b>Internal</b> members are "internal" means they are only expected to be accessed 
+"internally" in <b>opaque</b> members and other <b>internal</b> members. With this rule 
+followed, an <b>internal</b> member is always isolated from and therefore invisible to JS 
+re-compilers. Members of an <b>internal</b> member and subclasses of an <b>internal</b> 
+class must be <b>internal</b>. Accessing the <b>internal</b> members outside of <b>opaque</b> 
+members and <b>internal</b> members is prohibited.</p>
+
+<p>JS re-compilers shall report errors on any operations causing to resolve <b>internal</b> 
+members.</p>
+
+<p>Unless specified, the compatibility and usage of a member are inherited from the super 
+class for a subclass, from the overridden method for an overriding method, or from the 
+enclosing member for a member that is neither a subclass nor an overriding method. Obviously, 
+a private member has no special usage and inherits compatibility from its enclosing member.</p>
+
+<p>As a software, JS is opaque and encloses JS Simulation (sim.jar) which is totally 
+<b>internal</b>, JS Emulation (emu.jar) which is an <b>internal</b> package collection with 
+<b>normal</b> packages, and JS Class Library (js.jar) which is <b>opaque</b> and encloses 
+the <b>opaque</b> packages <tt>js.**</tt> and the <b>normal</b> packages <tt>jsx.**</tt>.</p>
+
+<p>Members of an <b>opaque</b> member can be specifically <b>internal</b> but members of an 
+<b>internal</b> member must be all <b>internal</b>. To make re-compilation, simulation and 
+user development relatively independent onto each other, developers other than the author 
+can nor specify the special usage or compatibility, which must be default or inherited from 
+JS.</p>
+
+<p>Without specified, a member is automatically <b>normal</b>, or compatible to both 
+simulation environment and re-compilation process. A <b>normal</b> member has the default 
+compatibility and need not have a "JavaScript" section in this document for it. The subclasses 
+of a <b>normal</b> class must also be <b>normal</b>, but its superclass and members do not 
+have to. For examples, {@link js.Function} is <b>normal</b> but its members, except for the 
+abstract method {@link js.Function#function(Object, js.Function.Call)}, are all opaque, so 
+we are able to define function objects with "normal" Java statements while access the function 
+itself "opaquely". And {@link js.JsApplet} is <b>normal</b> but its superclass, specifically 
+(<tt>java.applet</tt>), is <b>internal</b> and its members, except for the method 
+{@link js.JsApplet#start()} and {@link js.JsApplet#onReady()}, are all <b>opaque</b>, so we 
+are able to create JS applets "normally".</p>
+
+<p>User defined packages are all <b>normal</b> and a user defined subclass automatically 
+inherits compatibility from its superclass. That is, user defined classes are all <b>normal</b> 
+except for the extended <b>opaque</b> classes. The members of a user extended <b>opaque</b> 
+class must all be <b>opaque</b> and "direct", which means re-compilation process must convert 
+them directly without changing their names, though expanding variable arguments is necessary.
+for an <b>opaque</b> method with a {@link js.Vars} parameter.</p>
+
+<p>Specially, Java primitive types are all "opaque". The class <tt>java.lang.String</tt> 
+and Java basic classes that wrap the primitive types are also "primitive" in re-compilation 
+and therefore are <b>opaque</b> too. The class <tt>java.lang.Object</tt> and the class 
+<tt>java.lang.Class</tt> have obviously to be <b>opaque</b> to re-compilers but no class 
+inherits the compatibility from <tt>java.lang.Object</tt>. The static <tt>main</tt> 
+methods are always <b>internal</b>, where developers can initialize simulation, start applets 
+and/or initiate re-compilation. The static <tt>main</tt> methods must be isolated completely 
+from the re-compilation process, though the re-compilers themselves might have been started 
+from there.</p>
+
+<p>Please refer to <a href="http://www.ecma-international.org/publications/standards/Ecma-262.htm" target="_blank">
+Standard ECMA-262 ECMAScript Language Specification</a> and 
+David Flanagan's <i>JavaScript: The Definitive Guide, 5th Edition</i> 
+for the features of JavaScript language.</p>
+</body>
+</html>
